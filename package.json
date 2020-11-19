@@ -1,0 +1,22 @@
+{
+  "name": "web-tweet-express",
+  "version": "1.0.0",
+  "description": "![alt text](http://res.cloudinary.com/hackhub/image/upload/v1524849627/Home_j9hfb3.jpg)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruitang2create/web-tweet-express.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruitang2create/web-tweet-express/issues"
+  },
+  "homepage": "https://github.com/ruitang2create/web-tweet-express#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
