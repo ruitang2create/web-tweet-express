@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const tweets = require('./tweets');
+const index = require('./routes/index');
+const profile = require('./routes/profile');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -19,11 +21,8 @@ app.use(logger('dev'));
 
 app.locals.moment = require('moment');
 
-app.get('/', (req, res) => res.render('index', { tweets }));
-app.get('/login', (req, res) => res.render('login'));
-app.get('/signup', (req, res) => res.render('signup'));
-app.get('/profile', (req, res) => res.render('profile'));
-app.get('/profile/edit', (req, res) => res.render('editProfile'));
+app.use('/', index);
+app.use('/profile', profile);
 
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
