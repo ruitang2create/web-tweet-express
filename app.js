@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const tweets = require('./tweets');
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -15,7 +17,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 
-app.get('/', (req, res) => res.render('index'));
+app.locals.moment = require('moment');
+
+app.get('/', (req, res) => res.render('index', { tweets }));
 app.get('/login', (req, res) => res.render('login'));
 app.get('/signup', (req, res) => res.render('signup'));
 app.get('/profile', (req, res) => res.render('profile'));
