@@ -5,6 +5,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/webdxd')
 
 const tweets = require('./tweets');
 const index = require('./routes/index');
