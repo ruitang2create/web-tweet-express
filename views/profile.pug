@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    .col-2of5.bg-white.profile
+        #profile-content
+        a.btn-border.space-top(href="/profile/edit") Edit profile
+        button.btn-border.space-top#logout-btn Log output
+    .col-3of5.bg-white
+        .tweet
+            form.tweet-form(action="#")
+                .row
+                    img.avatar-sm.v-top(src="/img/avatar.jpg" alt="avatar")
+                    textarea.input-tweet(placeholder="What's up?")
+                .row.tweet-actions
+                    input.hidden(type="file")
+                    button.btn-clear
+                        i.far.fa-image
+                    button.btn-primary Post
+        #tweet-list

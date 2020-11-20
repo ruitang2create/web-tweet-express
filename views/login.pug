@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .container
+        .col-2of5.bg-white.profile.user-auth
+            h3 Log in to Web Tweet
+            form#login-form(action="#")
+                input.input-auth#username(type="text" placeholder="Username")
+                input.input-auth#password(type="password" placeholder="Password")
+                button.btn-primary#login-btn(type="button") Log in
+                h6 New to Web Tweet? 
+                    a(href="signup") Sign up Now
+        .col-3of5.bg-white
+            #tweet-list
