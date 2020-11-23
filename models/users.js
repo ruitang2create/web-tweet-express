@@ -1,3 +1,4 @@
+const passportLocalMongoose = require('passport-local-mongoose');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -8,6 +9,8 @@ const UsersSchema = new Schema({
     bio: String,
     avatarUrl: { type: String, default: '/img/webdxd.png' }
 });
+
+UsersSchema.plugin(passportLocalMongoose);
 
 const Users = mongoose.model('Users', UsersSchema);
 
