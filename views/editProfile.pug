@@ -2,37 +2,35 @@ extends layout
 
 block content
     .col-2of5.bg-white
-        form.profile(action="profile")
+        form.profile(action="profile/edit" method="POST")
             .relative.img-edit
                 img.avatar#avatar-image(src="/img/sample-avatar.png" alt="avatar")
-                input#avatar-file(type="hidden" role="uploadcare-ploader" name="content" data-public-key="7d92f12ba9b3c1d2afd1" data-images-only)
+                input#avatar-file(type="hidden" role="uploadcare-uploader" name="my_file" data-images-only)
                 img.avatar-upload#avatar-file-btn(src="/img/upload.png" alt="upload-img")
             input.input-profile#name-input(type="text" placeholder="Full name")
             h5#username
             input.input-profile#location-input(type="text" placeholder="Location")
             textarea.input-profile#bio-input(placeholder="Personal Bio")
-            button.btn-primary.space-top#save-btn(type="button") Save
-            button.btn-primary.space-top#cancel-btn(type="button") Cancel
-    .col-3of5.bg-white
-        .tweet
-            form.tweet-form(action="#")
-                .row
-                    img.avatar-sm.v-top(src="/img/avatar.jpg" alt="avatar")
-                    textarea.input-tweet(placeholder="What's up?")
-                .row.tweet-actions
-                    input.hidden(type="file")
-                    button.btn-clear
-                        i.far.fa-image
-                    button.btn-primary Post
-        each tweet in tweets
-            .tweet
-                .row
-                    img.avatar-sm(src=tweet.author.avatarUrl alt="avatar")
-                    h4
-                        b=tweet.author.name
-                    h5=`@${tweet.author.username}`
-                    h5=moment(tweet.createdAt).format('MMMM D, YYYY hh:mm A')
-                p=tweet.content
-                    if (tweet.imageUrl)
-                        img(src=tweet.imageUrl alt="tweet")
-        .fade-cover
+            button.btn-primary.space-top#save-btn(type="submit") Save
+            a.btn-border.space-top(href="/profile") Cancel
+    include tweet
+
+block script
+    script.
+        $('.avatar-upload').click(function() {
+            uploadcare.openDialog(null, {
+                previewStep:true,
+                crop:true,
+            }).done((file) => {
+                file.promise().done(fileInfo=>{
+                    $.ajax({
+                        url: '/profile/avatar',
+                        type: 'POST',
+                        data: { avatarUrl: fileInfo.cdnUrl },
+                        success(res) {
+                            if (res.success) location.href='/profile';
+                        }
+                    });
+                });
+            });
+        });

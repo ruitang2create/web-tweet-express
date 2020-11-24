@@ -11,6 +11,14 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/webdxd')
+const Tweets = require('./models/tweets');
+
+app.use((req, res, next) => {
+    Tweets.find({}, (err, tweets) => {
+        res.locals.tweets = tweets;
+        next();
+    });
+});
 
 const index = require('./routes/index');
 const profile = require('./routes/profile');
