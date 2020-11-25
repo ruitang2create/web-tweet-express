@@ -1,10 +1,10 @@
 .col-3of5.bg-white
     if (user)
         .tweet
-            form(action="#")
+            form(action="/tweet" method="POST")
                 .row
                     img.avatar-sm.v-top(src=user.avatarUrl alt="avatar")
-                    textarea.input-tweet(placeholder="What's up?")
+                    textarea.input-tweet(placeholder="What's up?" name="content" required="")
                 .row.tweet-actions
                     input.hidden(type="file")
                     button.btn-clear

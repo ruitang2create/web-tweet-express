@@ -7,7 +7,7 @@ const UsersSchema = new Schema({
     username: { type: String, required: true },
     location: String,
     bio: String,
-    avatarUrl: { type: String, default: '/img/webdxd.png' }
+    avatarUrl: { type: String, default: '/img/avatar.jpg' }
 });
 
 UsersSchema.plugin(passportLocalMongoose);

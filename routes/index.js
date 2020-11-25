@@ -3,13 +3,16 @@ const passport = require('passport');
 const Users = require('../models/users');
 const express = require('express');
 const router = express.Router();
-// const tweets = require('../tweets');
-// router.get('/', (req, res) => res.render('index', { tweets }));
 
 const Tweets = require('../models/tweets');
 router.get('/', utils.requireLogin, (req, res) => {
-    Tweets.find({}, (err, tweets) => {
+    Tweets.find({})
+    .populate('author')
+    .exec()
+    .then(tweets => {
         res.render('index', { tweets });
+    }).catch(err => {
+        next(err);
     });
 });
 router.get('/login', (req, res) => res.render('login'));
