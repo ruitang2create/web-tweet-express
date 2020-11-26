@@ -18,6 +18,18 @@
                     b=tweet.author.name
                 h5=`@${tweet.author.username}`
                 h5=moment(tweet.createdAt).format('MMMM D, YYYY hh:mm A')
+                if (tweet.author._id.toString() === user._id.toString())
+                    button.btn-trans#editButton edit
+                    button.btn-trans#deleteButton delete
             p=tweet.content
-                if (tweet.imageUrl)
-                    img(src=tweet.imageUrl alt="tweet")
+            if (tweet.imageUrl)
+                img(src=tweet.imageUrl alt="tweet")
+
+script.
+    $('#editButton').click(() => {
+        alert("Edit your tweet!");
+    });
+
+    $('#deleteButton').click(() => {
+        alert("Delete your tweet!");
+    });

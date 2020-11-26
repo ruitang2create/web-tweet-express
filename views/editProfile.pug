@@ -4,7 +4,7 @@ block content
     .col-2of5.bg-white
         form.profile(action="profile/edit" method="POST")
             .relative.img-edit
-                img.avatar#avatar-image(src="/img/sample-avatar.png" alt="avatar")
+                img.avatar#avatar-image(src=user.avatarUrl alt="avatar")
                 input#avatar-file(type="hidden" role="uploadcare-uploader" name="my_file" data-images-only)
                 img.avatar-upload#avatar-file-btn(src="/img/upload.png" alt="upload-img")
             input.input-profile#name-input(type="text" placeholder="Full name")
