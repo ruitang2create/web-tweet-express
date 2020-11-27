@@ -1,8 +1,16 @@
 extends layout
 
 block content
-    .col-2of5.bg-white.profile
-        #profile-content
-        a.btn-border.space-top(href="/profile/edit") Edit profile
-        a.btn-border.space-top(href="/logout") Log out
-    include tweet
+    .container
+        .col-2of5.bg-white.profile
+            img.avatar(src=user.avatarUrl alt="avatar")
+            h4=user.name
+            h5=`@${user.username}`
+            if (user.location)
+                h4
+                    i.fas.fa-map-marker-alt=user.location
+            if (user.bio)
+                p.center=user.bio
+            a.btn-border.space-top(href="/profile/edit") Edit profile
+            a.btn-border.space-top(href="/logout") Log out
+        include tweet

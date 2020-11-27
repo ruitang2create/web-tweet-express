@@ -46,7 +46,7 @@ h6 {
 
 p {
     font-weight: 300;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.4rem;
 }
 
@@ -239,11 +239,11 @@ textarea.input-profile {
     transition: opacity .3s ease;
 }
 
-#editButton {
+.editButton {
     color: #29C9DE
 }
 
-#deleteButton {
+.deleteButton {
     color: #fb0000
 }
 

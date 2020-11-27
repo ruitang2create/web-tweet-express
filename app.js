@@ -12,6 +12,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/webdxd')
 const Tweets = require('./models/tweets');
+const utils = require('./utils');
 
 app.use((req, res, next) => {
     Tweets.find({}, (err, tweets) => {
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 const index = require('./routes/index');
 const profile = require('./routes/profile');
 const tweetRouter = require('./routes/tweet');
+const { search } = require('./routes/index');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -52,6 +54,19 @@ app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 });
+
+app.use((req, res, next) => {
+    const searchContent = (req.isAuthenticated() && req.originalUrl.includes('/profile')) ? { author: req.user._id } : {};
+    Tweets.find(searchContent)
+    .populate('author').sort({ createdAt: -1 })
+    .exec()
+    .then(tweets => {
+        res.locals.tweets = tweets;
+        next();
+    }).catch(err => {
+        next(err);
+    });
+})
 
 app.use('/', index);
 app.use('/profile', profile);

@@ -5,16 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 const Tweets = require('../models/tweets');
-router.get('/', utils.requireLogin, (req, res) => {
-    Tweets.find({})
-    .populate('author')
-    .exec()
-    .then(tweets => {
-        res.render('index', { tweets });
-    }).catch(err => {
-        next(err);
-    });
-});
+router.get('/', utils.requireLogin, (req, res) => res.render('index'));
 router.get('/login', (req, res) => res.render('login'));
 router.get('/signup', (req, res) => res.render('signup'));
 router.post('/login', passport.authenticate('local'), (req, res) => {

@@ -21,4 +21,32 @@ router.post('/', utils.requireLogin, (req, res) => {
         });
 });
 
+router.put('/', utils.requireLogin, (req, res) => {
+    console.log('Getting update request from front-end...');
+    const tweetID = req.body.tweetID;
+    const newContent = req.body.newContent;
+    Tweets.findByIdAndUpdate({_id: tweetID}, {content: newContent})
+    .then(() => {
+        console.log('Tweet(' + tweetID + ') updated!');
+    })
+    .catch(err => {
+        next(err);
+    })
+    res.json({ updated: true });
+});
+
+router.delete('/:id/delete', utils.requireLogin, (req, res) => {
+    const dest = req.body.currUrl;
+    console.log('Getting delete request from ' + dest);
+    const targetId = req.params.id;
+    Tweets.deleteOne({_id: targetId})
+    .then(() => {
+        console.log('Tweet(' + targetId + ') deleted!');
+        res.json({
+            message: 'Tweet deleted!',
+            deleted: true,
+        });
+    }).catch(err => next(err));
+});
+
 module.exports = router;

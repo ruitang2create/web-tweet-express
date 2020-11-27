@@ -1,35 +1,74 @@
 .col-3of5.bg-white
     if (user)
         .tweet
-            form(action="/tweet" method="POST")
+            form#tweetForm(action="/tweet" method="POST")
                 .row
                     img.avatar-sm.v-top(src=user.avatarUrl alt="avatar")
                     textarea.input-tweet(placeholder="What's up?" name="content" required="")
+                p
+                    img#previewImage
                 .row.tweet-actions
-                    input.hidden(type="file")
-                    button.btn-clear
+                    //- input.hidden(type="file")
+                    button#tweetImage.btn-clear(type="button")
                         i.far.fa-image
-                    button.btn-primary Post
+                    button.btn-primary(type="submit") Post
     each tweet in tweets
         .tweet
             .row
                 img.avatar-sm(src=tweet.author.avatarUrl alt="avatar")
-                h4
+                h5
                     b=tweet.author.name
                 h5=`@${tweet.author.username}`
                 h5=moment(tweet.createdAt).format('MMMM D, YYYY hh:mm A')
                 if (tweet.author._id.toString() === user._id.toString())
-                    button.btn-trans#editButton edit
-                    button.btn-trans#deleteButton delete
-            p=tweet.content
+                    button.btn-trans.editButton(id=tweet._id) edit
+                    button.btn-trans.deleteButton(id=tweet._id) delete
+            p.tweetBody=tweet.content
             if (tweet.imageUrl)
                 img(src=tweet.imageUrl alt="tweet")
+    
+    .modalSection
+        #myModal.modal
+            .modal-content
+                .editPos
+                    input.hiddenInfo#tweetID(type="hidden", name="tweetID")
+                    input.hiddenInfo#currUrl(type="hidden", name="currUrl")
+                    textarea#editArea(name="newContent", cols="30", rows="10") Edit your tweet!
+                .actionBtn
+                    button.btn-clear.btn-modal#cancelEdit(type='button') Cancel
+                    button.btn-primary.btn-modal#submitEdit(type='button') Confirm
+    
+    script(src='/js/modal.js')
 
 script.
-    $('#editButton').click(() => {
-        alert("Edit your tweet!");
+    //- $('.editButton').click(() => {
+    //-     alert("Edit your tweet!");
+    //- });
+
+    $('.deleteButton').click(() => {
+        const tweetID = event.target.id;
+        const currentUrl = window.location.href;
+        $.ajax({
+            url: `/tweet/${tweetID}/delete`,
+            type: 'DELETE',
+            data: { currUrl: currentUrl },
+            success(res) {
+                if (res.deleted) {
+                    location.reload();
+                }
+            }
+        });
     });
 
-    $('#deleteButton').click(() => {
-        alert("Delete your tweet!");
+script.
+    $('#tweetImage').click(function() {
+        uploadcare.openDialog(null, {
+            previewStep:true,
+            crop:true,
+        }).done((file) => {
+            file.promise().done(fileInfo=>{
+                imageUrl = fileInfo.cdnUrl;
+                $('#previewImage').attr('src', fileInfo.cdnUrl).attr('alt', 'tweet')
+            });
+        });
     });

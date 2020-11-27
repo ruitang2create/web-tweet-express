@@ -4,31 +4,13 @@ const router = express.Router();
 const Users = require('../models/users');
 const Tweets = require('../models/tweets');
 
-router.get('/', utils.requireLogin, (req, res) => {
-    Tweets.find({ author: req.user._id })
-    .populate('author')
-    .exec()
-    .then(tweets => {
-        res.render('profile', { tweets });
-    }).catch(err => {
-        next(err);
-    });
-});
+router.get('/', utils.requireLogin, (req, res) => res.render('profile'));
 
 router.post('/', utils.requireLogin, (req, res) => {
     res.json(req.body);
 });
 
-router.get('/edit', utils.requireLogin, (req, res) => {
-    Tweets.find({ author: req.user._id })
-    .populate('author')
-    .exec()
-    .then(tweets => {
-        res.render('editProfile', { tweets });
-    }).catch(err => {
-        next(err);
-    });
-});
+router.get('/edit', utils.requireLogin, (req, res) => res.render('editProfile'));
 
 router.post('/edit', utils.requireLogin, (req, res) => {
     console.log("Editing profile...");

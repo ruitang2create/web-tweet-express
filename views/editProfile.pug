@@ -1,19 +1,20 @@
 extends layout
 
 block content
-    .col-2of5.bg-white
-        form.profile(action="profile/edit" method="POST")
-            .relative.img-edit
-                img.avatar#avatar-image(src=user.avatarUrl alt="avatar")
-                input#avatar-file(type="hidden" role="uploadcare-uploader" name="my_file" data-images-only)
-                img.avatar-upload#avatar-file-btn(src="/img/upload.png" alt="upload-img")
-            input.input-profile#name-input(type="text" placeholder="Full name")
-            h5#username
-            input.input-profile#location-input(type="text" placeholder="Location")
-            textarea.input-profile#bio-input(placeholder="Personal Bio")
-            button.btn-primary.space-top#save-btn(type="submit") Save
-            a.btn-border.space-top(href="/profile") Cancel
-    include tweet
+    .container
+        .col-2of5.bg-white
+            form.profile(action="profile/edit" method="POST")
+                .relative.img-edit
+                    img.avatar#avatar-image(src=user.avatarUrl alt="avatar")
+                    input#avatar-file(type="hidden" role="uploadcare-uploader" name="my_file" data-images-only)
+                    img.avatar-upload#avatar-file-btn(src="/img/upload.png" alt="upload-img")
+                input.input-profile#name-input(type="text" placeholder="Full name")
+                h5#username=`@${user.username}`
+                input.input-profile#location-input(type="text" placeholder="Location")
+                textarea.input-profile#bio-input(placeholder="Personal Bio")
+                button.btn-primary.space-top#save-btn(type="submit") Save
+                a.btn-border.space-top(href="/profile") Cancel
+        include tweet
 
 block script
     script.
