@@ -8,15 +8,14 @@ $('.tweet').hover(
 );
 
 $('.editButton').click(() => {
-    const tweetID = event.target.id;
+    const tweetID = event.target.dataset.id;
     $('#editArea').val(focusedTweet);
     $('#myModal').css('display', 'block');
     $('#submitEdit').click(() => {
         $.ajax({
-            url: `/tweet/`,
+            url: `/tweet/${tweetID}`,
             type: 'PUT',
             data: {
-                tweetID: tweetID,
                 newContent: $('#editArea').val(),
             },
             success(res) {

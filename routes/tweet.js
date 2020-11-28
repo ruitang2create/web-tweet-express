@@ -21,9 +21,9 @@ router.post('/', utils.requireLogin, (req, res) => {
         });
 });
 
-router.put('/', utils.requireLogin, (req, res) => {
+router.put('/:id', utils.requireLogin, (req, res) => {
     console.log('Getting update request from front-end...');
-    const tweetID = req.body.tweetID;
+    const tweetID = req.params.id;
     const newContent = req.body.newContent;
     Tweets.findByIdAndUpdate({_id: tweetID}, {content: newContent})
     .then(() => {
@@ -35,7 +35,7 @@ router.put('/', utils.requireLogin, (req, res) => {
     res.json({ updated: true });
 });
 
-router.delete('/:id/delete', utils.requireLogin, (req, res) => {
+router.delete('/:id', utils.requireLogin, (req, res) => {
     const dest = req.body.currUrl;
     console.log('Getting delete request from ' + dest);
     const targetId = req.params.id;

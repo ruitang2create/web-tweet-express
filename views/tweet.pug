@@ -8,7 +8,6 @@
                 p
                     img#previewImage
                 .row.tweet-actions
-                    //- input.hidden(type="file")
                     button#tweetImage.btn-clear(type="button")
                         i.far.fa-image
                     button.btn-primary(type="submit") Post
@@ -21,8 +20,8 @@
                 h5=`@${tweet.author.username}`
                 h5=moment(tweet.createdAt).format('MMMM D, YYYY hh:mm A')
                 if (tweet.author._id.toString() === user._id.toString())
-                    button.btn-trans.editButton(id=tweet._id) edit
-                    button.btn-trans.deleteButton(id=tweet._id) delete
+                    button.btn-trans.editButton(data-id=tweet._id) edit
+                    button.btn-trans.deleteButton(data-id=tweet._id) delete
             p.tweetBody=tweet.content
             if (tweet.imageUrl)
                 img(src=tweet.imageUrl alt="tweet")
@@ -46,7 +45,7 @@ script.
     //- });
 
     $('.deleteButton').click(() => {
-        const tweetID = event.target.id;
+        const tweetID = event.target.dataset.id;
         const currentUrl = window.location.href;
         $.ajax({
             url: `/tweet/${tweetID}/delete`,
